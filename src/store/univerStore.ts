@@ -7,12 +7,18 @@ import {
   FUniver,
   Univer,
 } from "@univerjs/presets";
-import { UniverSheetsCorePreset } from "@univerjs/preset-sheets-core";
+import {
+  FWorkbook,
+  FWorksheet,
+  UniverSheetsCorePreset,
+} from "@univerjs/preset-sheets-core";
 import UniverPresetSheetsCoreEnUS from "@univerjs/preset-sheets-core/locales/en-US";
 
 interface UniverState {
   univer?: Univer;
   univerAPI?: FUniver;
+  fworkbook: FWorkbook;
+  fworksheet: FWorksheet;
   isInitialized: boolean;
   initializeUniver: (container: HTMLDivElement) => void;
   disposeUniver: () => void;
@@ -23,6 +29,8 @@ interface UniverState {
 export const useUniverStore = create<UniverState>((set, get) => ({
   univer: undefined,
   univerAPI: undefined,
+  fworkbook: {} as FWorkbook,
+  fworksheet: {} as FWorksheet,
   isInitialized: false,
 
   initializeUniver: (container: HTMLDivElement) => {
@@ -51,6 +59,8 @@ export const useUniverStore = create<UniverState>((set, get) => ({
     set({
       univer,
       univerAPI,
+      fworkbook: univerAPI.getActiveWorkbook() as FWorkbook,
+      fworksheet: univerAPI.getActiveWorkbook()?.getActiveSheet() as FWorksheet,
       isInitialized: true,
     });
 
@@ -66,6 +76,8 @@ export const useUniverStore = create<UniverState>((set, get) => ({
     set({
       univer: undefined,
       univerAPI: undefined,
+      fworkbook: {} as FWorkbook,
+      fworksheet: {} as FWorksheet,
       isInitialized: false,
     });
   },
@@ -74,3 +86,5 @@ export const useUniverStore = create<UniverState>((set, get) => ({
 // Exporta una acción para usar el API fácilmente en otros componentes
 export const useUniverAPI = () => useUniverStore((state) => state.univerAPI);
 export const useUniver = () => useUniverStore((state) => state.univer);
+export const useFWorkbook = () => useUniverStore((state) => state.fworkbook);
+export const useFWorksheet = () => useUniverStore((state) => state.fworksheet);
