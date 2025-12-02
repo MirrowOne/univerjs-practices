@@ -7,9 +7,7 @@ export default function HomePage() {
   return (
     <>
       <div className={styles.pageLayout}>
-        <ToolBar>
-          <button>Guardar</button>
-        </ToolBar>
+        <ToolBar />
         <Univer />
       </div>
     </>

@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import styles from "./Univer.module.css";
 import "@univerjs/preset-sheets-core/lib/index.css";
-import { useUniverStore } from "@/src/globalStore/univerStore";
+import { useUniverStore } from "@/src/store/univerStore";
 
 export function Univer() {
   const containerRef = useRef<HTMLDivElement>(null);
