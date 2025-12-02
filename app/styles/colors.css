@@ -1,0 +1,64 @@
+:root {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(175 100% 1%);
+  --bg: hsl(175 100% 3%);
+  --bg-light: hsl(176 77% 6%);
+  --text: hsl(174 100% 89%);
+  --text-muted: hsl(175 31% 63%);
+  --highlight: hsl(175 34% 32%);
+  --border: hsl(176 57% 20%);
+  --border-muted: hsl(177 100% 8%);
+  --primary: hsl(176 49% 56%);
+  --secondary: hsl(350 64% 75%);
+  --danger: hsl(9 31% 65%);
+  --warning: hsl(52 22% 56%);
+  --success: hsl(147 21% 58%);
+  --info: hsl(217 34% 65%);
+  /* oklch */
+  --bg-dark: oklch(0.1 0.03 189);
+  --bg: oklch(0.15 0.03 189);
+  --bg-light: oklch(0.2 0.03 189);
+  --text: oklch(0.96 0.06 189);
+  --text-muted: oklch(0.76 0.06 189);
+  --highlight: oklch(0.5 0.06 189);
+  --border: oklch(0.4 0.06 189);
+  --border-muted: oklch(0.3 0.06 189);
+  --primary: oklch(0.76 0.1 189);
+  --secondary: oklch(0.76 0.1 9);
+  --danger: oklch(0.7 0.06 30);
+  --warning: oklch(0.7 0.06 100);
+  --success: oklch(0.7 0.06 160);
+  --info: oklch(0.7 0.06 260);
+}
+body.light {
+  /* hsl (fallback color) */
+  --bg-dark: hsl(174 42% 87%);
+  --bg: hsl(174 70% 92%);
+  --bg-light: hsl(174 100% 97%);
+  --text: hsl(177 100% 1%);
+  --text-muted: hsl(176 57% 20%);
+  --highlight: hsl(174 100% 94%);
+  --border: hsl(175 25% 44%);
+  --border-muted: hsl(175 25% 56%);
+  --primary: hsl(178 100% 8%);
+  --secondary: hsl(347 44% 31%);
+  --danger: hsl(9 25% 41%);
+  --warning: hsl(51 29% 33%);
+  --success: hsl(148 24% 35%);
+  --info: hsl(217 26% 42%);
+  /* oklch */
+  --bg-dark: oklch(0.92 0.03 189);
+  --bg: oklch(0.96 0.03 189);
+  --bg-light: oklch(1 0.03 189);
+  --text: oklch(0.15 0.06 189);
+  --text-muted: oklch(0.4 0.06 189);
+  --highlight: oklch(1 0.06 189);
+  --border: oklch(0.6 0.06 189);
+  --border-muted: oklch(0.7 0.06 189);
+  --primary: oklch(0.4 0.1 189);
+  --secondary: oklch(0.4 0.1 9);
+  --danger: oklch(0.5 0.06 30);
+  --warning: oklch(0.5 0.06 100);
+  --success: oklch(0.5 0.06 160);
+  --info: oklch(0.5 0.06 260);
+}

@@ -1,0 +1,14 @@
+@import url("./reset.css");
+@import url("./colors.css");
+
+/* Estilos base adicionales */
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+#app {
+  min-height: 100vh;
+}
