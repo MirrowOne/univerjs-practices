@@ -15,7 +15,6 @@ export const useValidationsRules = () => {
                 showErrorMessage: true,
                 error: 'El valor debe estar entre 1 y 10',
                 errorTitle: 'Error de validación',
-
             })
             .build();
 
