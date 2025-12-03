@@ -23,7 +23,7 @@ interface UniverState {
   fworkbook: FWorkbook;
   fworksheet: FWorksheet;
   isInitialized: boolean;
-  initializeUniver: (container: HTMLDivElement) => void;
+  initializeUniver: (container: HTMLDivElement) => Promise<void>;
   disposeUniver: () => void;
   // Puedes añadir más estados y acciones relacionadas con Univer, e.g.,
   // toggleDarkMode: (isDark: boolean) => void;
@@ -36,7 +36,7 @@ export const useUniverStore = create<UniverState>((set, get) => ({
   fworksheet: {} as FWorksheet,
   isInitialized: false,
 
-  initializeUniver: (container: HTMLDivElement) => {
+  initializeUniver: async (container: HTMLDivElement) => {
     // Evita inicializar si ya está hecho
     if (get().isInitialized) {
       return;
