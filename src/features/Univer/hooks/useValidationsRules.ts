@@ -7,6 +7,7 @@ export const useValidationsRules = () => {
 
     const numberBetweenRule = useCallback(() => {
         const fRange = fworksheet.getRange('A1:B10')
+
         const rule = univerAPI?.newDataValidation()
             .requireNumberBetween(1, 10)
             .setOptions({
@@ -24,28 +25,22 @@ export const useValidationsRules = () => {
     const textLengthRule = useCallback(() => {
         if (!univerAPI || !fworksheet) return;
 
-        const fRange = fworksheet.getRange('C1:C10');
+        const fRange = fworksheet.getRange('C1:C10')
 
-        // 1. Definir la fórmula como una cadena de texto
-        // Usamos RC (Relative Column/Row) para referirnos a la celda actual dentro del rango
-        const formula = '=AND(LEN(RC)>=5, LEN(RC)<=10)';
-
-        // 2. Crear la regla usando requireFormulaSatisfied
-        const rule = univerAPI.newDataValidation()
-            .requireFormulaSatisfied(
-                // La validación se cumple si la fórmula es TRUE
-                formula
-            )
+        const rule = univerAPI?.newDataValidation()
+            // 🚀 NUEVA FÓRMULA: Mayor a 5 Y Menor a 10
+            .requireFormulaSatisfied("=AND(LEN(C1)>=5, LEN(C1)<=10)")
             .setOptions({
                 showErrorMessage: true,
-                error: '⛔ La longitud del texto debe estar entre 5 y 10 caracteres (Usando Fórmula).',
-                errorTitle: 'Error de Longitud (Fórmula)',
+                // Mensaje de error actualizado
+                error: 'El valor debe tener entre 5 y 10 caracteres de longitud',
+                errorTitle: 'Error de validación de longitud',
                 errorStyle: univerAPI.Enum.DataValidationErrorStyle.STOP
             })
             .build();
 
-        // 3. Aplicar la regla
         fRange.setDataValidation(rule);
+
     }, [fworksheet, univerAPI]);
 
     // Create a new data validation rule that requires a number between 1 and 10 fot the range A1:B10
