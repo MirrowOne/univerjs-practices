@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@univerjs/preset-sheets-core": "^0.12.3",
+    "@univerjs/preset-sheets-data-validation": "^0.12.3",
     "@univerjs/presets": "^0.12.3",
     "next": "16.0.6",
     "react": "19.2.0",

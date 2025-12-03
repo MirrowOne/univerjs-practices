@@ -1,11 +1,13 @@
 import { sheetDataType } from "@/src/types/sheets-types";
-import { useFWorkbook, useFWorksheet } from "@/src/store/univerStore";
+import { useFWorkbook, useFWorksheet, useUniverAPI } from "@/src/store/univerStore";
 import { useCallback } from "react";
 import { FRange } from "@univerjs/preset-sheets-core";
 
 export const useToolbarUtils = () => {
+
   const fworksheet = useFWorksheet();
   const fworkbook = useFWorkbook()
+  const univerAPI = useUniverAPI();
 
   const setValues = useCallback(
     (sheetData: sheetDataType) => {
@@ -39,7 +41,15 @@ export const useToolbarUtils = () => {
   }, [fworksheet]);
 
   const getSheetStyles = useCallback(() => {
-    console.table(fworksheet?.getDefaultStyle())
+    const frange = fworksheet?.getRange('A1')
+
+    // Aplicar estilos directamente al rango
+    // frange?.setBackgroundColor('#2C53F1')
+    // frange?.setFontSize(14)
+    // frange?.setFontWeight('bold')
+
+    // Si quieres ver los estilos aplicados
+    console.table(frange?.getCellStyleData())
   }, [fworksheet])
 
   return {
