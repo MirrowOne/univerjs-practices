@@ -5,13 +5,10 @@ import { useCallback } from "react";
 export const useToolbarUtils = () => {
   const fworksheet = useFWorksheet();
 
-  // se recorren primero las filas
   const setValues = useCallback(
     (sheetData: sheetDataType) => {
-      sheetData?.map((row, index) => {
-        // y luego se recorre cada celda de la fila
-        row.map((cell, cellIndex) => {
-          // se setea el valor de la celda
+      sheetData?.flatMap((row, index) => {
+        Array.from({ length: row.length }, (_, cellIndex) => {
           fworksheet
             ?.getRange({
               startRow: index,
@@ -19,7 +16,7 @@ export const useToolbarUtils = () => {
               endRow: index,
               endColumn: cellIndex,
             })
-            .setValue(cell);
+            .setValue(row[cellIndex]);
         });
       });
     },
