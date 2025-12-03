@@ -15,7 +15,7 @@ import {
 import { UniverSheetsDataValidationPreset } from "@univerjs/preset-sheets-data-validation";
 import UniverPresetSheetsDataValidationEnUS from '@univerjs/preset-sheets-data-validation/locales/en-US'
 import UniverPresetSheetsCoreEnUS from "@univerjs/preset-sheets-core/locales/en-US";
-import '@univerjs/preset-sheets-data-validation/lib/index.css'
+
 
 interface UniverState {
   univer?: Univer;
