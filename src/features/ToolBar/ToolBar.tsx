@@ -9,15 +9,20 @@ const sheetMockData = [
 ];
 
 export const ToolBar = () => {
-  const { setValues } = useToolbarUtils();
+  const { setValues, navigateToCell } = useToolbarUtils();
 
   const handleSetValues = () => {
     setValues(sheetMockData);
   };
 
+  const handleNavigateToCell = () => {
+    navigateToCell('D10');
+  };
+
   return (
     <section className={styles.toolBarContainer}>
       <button onClick={handleSetValues}>Buscar</button>
+      <button onClick={handleNavigateToCell}>Navegar a celda</button>
     </section>
   );
 };

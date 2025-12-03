@@ -1,9 +1,11 @@
 import { sheetDataType } from "@/src/types/sheets-types";
-import { useFWorksheet } from "@/src/store/univerStore";
+import { useFWorkbook, useFWorksheet } from "@/src/store/univerStore";
 import { useCallback } from "react";
+import { FRange } from "@univerjs/preset-sheets-core";
 
 export const useToolbarUtils = () => {
   const fworksheet = useFWorksheet();
+  const fworkbook = useFWorkbook()
 
   const setValues = useCallback(
     (sheetData: sheetDataType) => {
@@ -23,7 +25,21 @@ export const useToolbarUtils = () => {
     [fworksheet]
   );
 
+  const navigateToCell = useCallback((target: string | FRange) => {
+    const fRange = typeof target === 'string'
+      ? fworksheet?.getRange(target)
+      : target
+
+    const row = fRange?.getRow()
+    const column = fRange?.getColumn()
+
+    fworksheet?.setActiveSelection(fRange)
+    fworksheet?.scrollToCell(row, column)
+
+  }, [fworkbook, fworksheet]);
+
   return {
     setValues,
+    navigateToCell,
   };
 };
