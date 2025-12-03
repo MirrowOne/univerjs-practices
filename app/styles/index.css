@@ -2,6 +2,11 @@
 @import url("./colors.css");
 
 /* Estilos base adicionales */
+html,
+body {
+  height: 100%;
+}
+
 body {
   font-family: system-ui, -apple-system, sans-serif;
   background: var(--bg-dark);
