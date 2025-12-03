@@ -12,7 +12,10 @@ import {
   FWorksheet,
   UniverSheetsCorePreset,
 } from "@univerjs/preset-sheets-core";
+import { UniverSheetsDataValidationPreset } from "@univerjs/preset-sheets-data-validation";
+import UniverPresetSheetsDataValidationEnUS from '@univerjs/preset-sheets-data-validation/locales/en-US'
 import UniverPresetSheetsCoreEnUS from "@univerjs/preset-sheets-core/locales/en-US";
+import '@univerjs/preset-sheets-data-validation/lib/index.css'
 
 interface UniverState {
   univer?: Univer;
@@ -42,13 +45,17 @@ export const useUniverStore = create<UniverState>((set, get) => ({
     const { univerAPI, univer } = createUniver({
       locale: LocaleType.EN_US,
       locales: {
-        [LocaleType.EN_US]: mergeLocales(UniverPresetSheetsCoreEnUS),
+        [LocaleType.EN_US]: mergeLocales(UniverPresetSheetsCoreEnUS, UniverPresetSheetsDataValidationEnUS),
       },
       presets: [
         UniverSheetsCorePreset({
           container: container,
           // Puedes añadir otras configuraciones aquí
         }),
+        UniverSheetsDataValidationPreset({
+          // Whether to display the edit button in the drop-down menu
+          showEditOnDropdown: true,
+        })
       ],
     });
 
