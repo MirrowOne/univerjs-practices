@@ -1,20 +1,16 @@
-// store/univerStore.ts
+// src/store/univerStore.ts
 import { create } from "zustand";
-import {
-  createUniver,
+
+// ⚠️ Importar solo los TIPOS (interfaces) para evitar la ejecución de módulos en el servidor
+import type {
   LocaleType,
-  mergeLocales,
   FUniver,
   Univer,
 } from "@univerjs/presets";
-import {
+import type {
   FWorkbook,
-  FWorksheet,
-  UniverSheetsCorePreset,
+  FWorksheet
 } from "@univerjs/preset-sheets-core";
-import { UniverSheetsDataValidationPreset } from "@univerjs/preset-sheets-data-validation";
-import UniverPresetSheetsDataValidationEnUS from '@univerjs/preset-sheets-data-validation/locales/en-US'
-import UniverPresetSheetsCoreEnUS from "@univerjs/preset-sheets-core/locales/en-US";
 
 
 interface UniverState {
@@ -25,8 +21,6 @@ interface UniverState {
   isInitialized: boolean;
   initializeUniver: (container: HTMLDivElement) => Promise<void>;
   disposeUniver: () => void;
-  // Puedes añadir más estados y acciones relacionadas con Univer, e.g.,
-  // toggleDarkMode: (isDark: boolean) => void;
 }
 
 export const useUniverStore = create<UniverState>((set, get) => ({
@@ -41,6 +35,31 @@ export const useUniverStore = create<UniverState>((set, get) => ({
     if (get().isInitialized) {
       return;
     }
+
+    // PASO CRUCIAL: Importación dinámica de todas las librerías de UniverJS
+    // Esto asegura que el código solo se cargue cuando se llama a initializeUniver (en el cliente)
+    const [
+      univerPresets,
+      sheetsCore,
+      sheetsDataValidation,
+      validationLocale,
+      coreLocale,
+    ] = await Promise.all([
+      // Paquetes principales de funcionalidad
+      import("@univerjs/presets"),
+      import("@univerjs/preset-sheets-core"),
+      import("@univerjs/preset-sheets-data-validation"),
+
+      // Locales
+      import("@univerjs/preset-sheets-data-validation/locales/en-US"),
+      import("@univerjs/preset-sheets-core/locales/en-US"),
+    ]);
+
+    const { createUniver, LocaleType, mergeLocales } = univerPresets;
+    const { UniverSheetsCorePreset } = sheetsCore;
+    const { UniverSheetsDataValidationPreset } = sheetsDataValidation;
+    const UniverPresetSheetsDataValidationEnUS = validationLocale.default;
+    const UniverPresetSheetsCoreEnUS = coreLocale.default;
 
     const { univerAPI, univer } = createUniver({
       locale: LocaleType.EN_US,

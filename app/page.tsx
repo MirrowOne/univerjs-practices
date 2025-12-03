@@ -1,7 +1,8 @@
 import { Univer } from "@/src/features/Univer/Univer";
-import { ToolBar } from "@/src/features/ToolBar/ToolBar";
+
 
 import styles from "./homePage.module.css";
+import { ToolBar } from "@/src/features/ToolBar/ToolBar";
 
 export default function HomePage() {
   return (
