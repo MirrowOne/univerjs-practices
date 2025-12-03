@@ -36,10 +36,15 @@ export const useToolbarUtils = () => {
     fworksheet?.setActiveSelection(fRange)
     fworksheet?.scrollToCell(row, column)
 
-  }, [fworkbook, fworksheet]);
+  }, [fworksheet]);
+
+  const getSheetStyles = useCallback(() => {
+    console.table(fworksheet?.getDefaultStyle())
+  }, [fworksheet])
 
   return {
     setValues,
     navigateToCell,
+    getSheetStyles,
   };
 };
