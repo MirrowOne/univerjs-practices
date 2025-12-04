@@ -4,9 +4,17 @@ import { useToolbarUtils } from "./hooks/useToolbarUtils";
 // import { columnToLetter, toA1Notation } from "@/src/utils/parseToA1Notation";
 
 const sheetMockData = [
-  ["Nombre", "Apellido", "Edad"],
-  ["Juan", "Perez", "25"],
-  ["Maria", "Lopez", "30"],
+  [
+    "Codprod",
+    "Descripción",
+    "Existencia",
+    "Costo",
+    "Precio detal",
+    "Precio mayor",
+    "Precio distribuidor",
+  ],
+  ["h1-001", "HARINA PAN 1KG", "40", "0.8", "1.5", "1.3", "1.2"],
+  ["h1-002", "ARROZ MARISOL 1KG", "100", "0.7", "1.1", "1.0", "0.9"],
 ];
 
 // const rangeObject = {

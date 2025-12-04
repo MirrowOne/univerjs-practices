@@ -21,11 +21,13 @@ const Range2 = {
 
 interface IRuleConfig {
   numberBetween: {
+    isActive: boolean;
     range: IRange;
     min: number;
     max: number;
   };
   textLength: {
+    isActive: boolean;
     range: IRange;
     min: number;
     max: number;
@@ -37,11 +39,13 @@ const ruleConfig: IRuleConfig = {
   // desde aqui se moldeara el comportamiento en general de las reglas
   // este objeto debe contener la configuracion de cada regla por separado asi como las columnas que afectan a una u otra regla en conjunto
   numberBetween: {
+    isActive: false,
     range: Range1,
     min: 1,
     max: 10,
   },
   textLength: {
+    isActive: false,
     range: Range2,
     min: 5,
     max: 10,
@@ -108,7 +112,9 @@ export const useValidationsRules = () => {
   );
 
   const numberBetweenRule = useCallback(() => {
-    const { range, min, max } = numberBetween;
+    const { range, min, max, isActive } = numberBetween;
+
+    if (!isActive) return;
 
     const fRange = fworksheet.getRange(range);
 
@@ -128,16 +134,18 @@ export const useValidationsRules = () => {
   }, [fworksheet, univerAPI, numberBetween]);
 
   const textLengthRule = useCallback(() => {
-    if (!univerAPI || !fworksheet) return;
+    const { range, min, max, isActive } = textLength;
 
-    const fRange = fworksheet.getRange(textLength.range);
+    if (!isActive) return;
+
+    const fRange = fworksheet.getRange(range);
 
     const affectedColumns = {
-      startColumn: columnToLetter(textLength.range.startColumn),
-      endColumn: columnToLetter(textLength.range.endColumn),
+      startColumn: columnToLetter(range.startColumn),
+      endColumn: columnToLetter(range.endColumn),
     };
 
-    const formula = `=AND(LEN(${affectedColumns.startColumn}1)>=5, LEN(${affectedColumns.endColumn}1)<=10)`;
+    const formula = `=AND(LEN(${affectedColumns.startColumn}1)>=${min}, LEN(${affectedColumns.endColumn}1)<=${max})`;
 
     const rule = univerAPI
       ?.newDataValidation()
@@ -146,7 +154,7 @@ export const useValidationsRules = () => {
       .setOptions({
         showErrorMessage: true,
         // Mensaje de error actualizado
-        error: "El valor debe tener entre 5 y 10 caracteres de longitud",
+        error: `El valor debe tener entre ${min} y ${max} caracteres de longitud`,
         errorTitle: "Error de validación de longitud",
         errorStyle: univerAPI.Enum.DataValidationErrorStyle.STOP,
       })
