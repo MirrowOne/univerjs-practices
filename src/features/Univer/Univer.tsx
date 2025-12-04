@@ -4,7 +4,8 @@ import styles from "./Univer.module.css";
 import { useUniverStore } from "@/src/store/univerStore";
 import { useValidationsRules } from "./hooks/useValidationsRules";
 import "@univerjs/preset-sheets-core/lib/index.css";
-import '@univerjs/preset-sheets-data-validation/lib/index.css'
+import "@univerjs/preset-sheets-data-validation/lib/index.css";
+import useInitializeEvents from "./hooks/events/useInitializeEvents";
 
 export function Univer() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -26,6 +27,9 @@ export function Univer() {
       initializeRules();
     }
   }, [isInitialized, initializeRules]);
+
+  // Inicializar
+  useInitializeEvents();
 
   return <div className={styles.univerRef} ref={containerRef} />;
 }
