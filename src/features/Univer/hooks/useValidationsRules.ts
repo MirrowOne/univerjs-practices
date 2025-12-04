@@ -77,7 +77,13 @@ const parseRuleConfig = (ruleConfig: IRuleConfig) => {
 
   // Condicion Final: Interseccion (2D Overlap)
   if (rowsOverlap && columnsOverlap) {
-    console.error("Los rangos se solapan");
+    console.error(
+      "Las reglas aplicadas a los rangos definidos estan solapados"
+    );
+    return {
+      numberBetween,
+      textLength,
+    };
   }
 
   // si no hay un error, el codigo continua aqui
