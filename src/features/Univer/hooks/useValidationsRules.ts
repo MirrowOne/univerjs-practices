@@ -1,10 +1,10 @@
 import { useFWorksheet, useUniverAPI } from "@/src/store/univerStore";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { columnToLetter } from "@/src/utils/parseToA1Notation";
 import { IRange } from "@univerjs/presets";
 
 //  R1
-const RangeAtoB = {
+const Range1 = {
   startRow: 0,
   startColumn: 0,
   endRow: 10,
@@ -12,7 +12,7 @@ const RangeAtoB = {
 };
 
 // R2
-const RangeCtoD = {
+const Range2 = {
   startRow: 0,
   startColumn: 2,
   endRow: 10,
@@ -37,17 +37,20 @@ const ruleConfig: IRuleConfig = {
   // desde aqui se moldeara el comportamiento en general de las reglas
   // este objeto debe contener la configuracion de cada regla por separado asi como las columnas que afectan a una u otra regla en conjunto
   numberBetween: {
-    range: RangeAtoB,
+    range: Range1,
     min: 1,
     max: 10,
   },
   textLength: {
-    range: RangeCtoD,
+    range: Range2,
     min: 5,
     max: 10,
   },
 };
 
+// mecanismo para detectar si hay solapamiento entre los rangos aplicados
+// no impide que se creen las validaciones, solo avisa si hay solapamiento
+// pero sienta las bases para poder hacer operaciones previas a la creacion de las validaciones
 const parseRuleConfig = (ruleConfig: IRuleConfig) => {
   const { numberBetween, textLength } = ruleConfig;
 
@@ -87,7 +90,7 @@ const parseRuleConfig = (ruleConfig: IRuleConfig) => {
   }
 
   // si no hay un error, el codigo continua aqui
-  console.log("✅ Configuración de rangos validada. No hay solapamiento.");
+  console.log("Configuración de rangos validada. No hay solapamiento.");
 
   return {
     numberBetween,
@@ -99,7 +102,10 @@ export const useValidationsRules = () => {
   const fworksheet = useFWorksheet();
   const univerAPI = useUniverAPI();
 
-  const { numberBetween, textLength } = parseRuleConfig(ruleConfig);
+  const { numberBetween, textLength } = useMemo(
+    () => parseRuleConfig(ruleConfig),
+    []
+  );
 
   const numberBetweenRule = useCallback(() => {
     const { range, min, max } = numberBetween;
