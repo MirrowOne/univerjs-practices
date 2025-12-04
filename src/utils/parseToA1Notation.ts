@@ -6,7 +6,7 @@ import { IRange } from "@univerjs/presets";
  * @param columnIndex - Índice de la columna (0, 1, 2, ...).
  * @returns La notación de columna en letras.
  */
-function columnToLetter(columnIndex: number): string {
+export function columnToLetter(columnIndex: number): string {
   let letter = "";
   // La notación A1 comienza en 1, así que ajustamos el índice
   let temp = columnIndex + 1;
@@ -29,7 +29,7 @@ function columnToLetter(columnIndex: number): string {
  * @param coords - El objeto de coordenadas.
  * @returns El rango en notación A1.
  */
-function toA1Notation(coords: IRange): string {
+export function toA1Notation(coords: IRange): string {
   const { startRow, startColumn, endRow, endColumn } = coords;
 
   // --- 1. Celda de inicio ---
@@ -54,19 +54,19 @@ function toA1Notation(coords: IRange): string {
 }
 
 // Objeto de prueba:
-const rangeObject: IRange = {
-  startRow: 0,
-  startColumn: 0,
-  endRow: 10,
-  endColumn: 1,
-};
+// const rangeObject: IRange = {
+//   startRow: 0,
+//   startColumn: 0,
+//   endRow: 10,
+//   endColumn: 1,
+// };
 
 // Ejecución
-const a1String: string = toA1Notation(rangeObject);
+// const a1String: string = toA1Notation(rangeObject);
 
-console.log(`Objeto de entrada:`, rangeObject);
-console.log(`Notación A1 resultante: **${a1String}**`);
+// console.log(`Objeto de entrada:`, rangeObject);
+// console.log(`Notación A1 resultante: **${a1String}**`);
 
 // Ejemplo adicional para probar la conversión de columna a letra:
-console.log(`Columna 25 (Z): ${columnToLetter(25)}`);
-console.log(`Columna 26 (AA): ${columnToLetter(26)}`);
+// console.log(`Columna 25 (Z): ${columnToLetter(25)}`);
+// console.log(`Columna 26 (AA): ${columnToLetter(26)}`);
