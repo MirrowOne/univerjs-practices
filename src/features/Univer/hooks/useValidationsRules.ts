@@ -1,115 +1,16 @@
 import { useFWorksheet, useUniverAPI } from "@/src/store/univerStore";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { columnToLetter } from "@/src/utils/parseToA1Notation";
-import { IRange } from "@univerjs/presets";
-
-//  R1
-const Range1 = {
-  startRow: 0,
-  startColumn: 0,
-  endRow: 10,
-  endColumn: 1,
-};
-
-// R2
-const Range2 = {
-  startRow: 0,
-  startColumn: 2,
-  endRow: 10,
-  endColumn: 1,
-};
-
-interface IRuleConfig {
-  numberBetween: {
-    isActive: boolean;
-    range: IRange;
-    min: number;
-    max: number;
-  };
-  textLength: {
-    isActive: boolean;
-    range: IRange;
-    min: number;
-    max: number;
-  };
-}
-
-const ruleConfig: IRuleConfig = {
-  // aqui se creara un objeto para determinar cuales seran las columnas y rangos que tendran las validaciones
-  // desde aqui se moldeara el comportamiento en general de las reglas
-  // este objeto debe contener la configuracion de cada regla por separado asi como las columnas que afectan a una u otra regla en conjunto
-  numberBetween: {
-    isActive: false,
-    range: Range1,
-    min: 1,
-    max: 10,
-  },
-  textLength: {
-    isActive: false,
-    range: Range2,
-    min: 5,
-    max: 10,
-  },
-};
-
-// mecanismo para detectar si hay solapamiento entre los rangos aplicados
-// no impide que se creen las validaciones, solo avisa si hay solapamiento
-// pero sienta las bases para poder hacer operaciones previas a la creacion de las validaciones
-const parseRuleConfig = (ruleConfig: IRuleConfig) => {
-  const { numberBetween, textLength } = ruleConfig;
-
-  // range start 'variable', range end 'variable'
-  // desestructuracion para alias para claridad
-  const {
-    startRow: rangeRS1,
-    startColumn: rangeCS1,
-    endRow: rangeRE1,
-    endColumn: rangeCE1,
-  } = numberBetween.range;
-  const {
-    startRow: rangeRS2,
-    startColumn: rangeCS2,
-    endRow: rangeRE2,
-    endColumn: rangeCE2,
-  } = textLength.range;
-
-  // 2. Logica de solapamiento (se colocan las condiciones cuando los rangos se solapan en una direccion)
-  // Condicion 1: Solapan en filas (Row Overlap)
-  // El fin de R1 esta despues del inicio de R2 y el fin de R2 esta despues del inicio de R1
-  const rowsOverlap = rangeRE1 >= rangeRS2 && rangeRE2 >= rangeRS1;
-
-  // Condicion 2: Solapan en columnas (Column Overlap)
-  // El fin de R1 esta despues del inicio de R2 y el fin de R2 esta despues del inicio de R1
-  const columnsOverlap = rangeCE1 >= rangeCS2 && rangeCE2 >= rangeCS1;
-
-  // Condicion Final: Interseccion (2D Overlap)
-  if (rowsOverlap && columnsOverlap) {
-    console.error(
-      "Las reglas aplicadas a los rangos definidos estan solapados"
-    );
-    return {
-      numberBetween,
-      textLength,
-    };
-  }
-
-  // si no hay un error, el codigo continua aqui
-  console.log("Configuración de rangos validada. No hay solapamiento.");
-
-  return {
-    numberBetween,
-    textLength,
-  };
-};
+import { IRuleConfig } from "../types/univerConfig";
+import { useUniverConfigStore } from "../store/useUniverConfig";
 
 export const useValidationsRules = () => {
+  const { getRuleConfig } = useUniverConfigStore();
+  const ruleConfig = getRuleConfig();
   const fworksheet = useFWorksheet();
   const univerAPI = useUniverAPI();
 
-  const { numberBetween, textLength } = useMemo(
-    () => parseRuleConfig(ruleConfig),
-    []
-  );
+  const { numberBetween, textLength } = ruleConfig as IRuleConfig;
 
   const numberBetweenRule = useCallback(() => {
     const { range, min, max, isActive } = numberBetween;
