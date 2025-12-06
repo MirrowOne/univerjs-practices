@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { IRuleConfig } from "../types/univerConfig";
-import { parseRulesConfig } from "../helpers/parseRulesConfig";
+// no usar mientras se encuentra una forma efectiva de hacerlo dinamico o tener
+// todas las reglas que se vayan a aplicar
+// import { parseRulesConfig } from "../helpers/parseRulesConfig";
 
 //  R1
 const Range1 = {
@@ -67,7 +69,7 @@ export const useUniverConfigStore = create<IUniverConfigStore>((set, get) => ({
   // que inicializar directamente los valores iniciales obtenidos de la base de datos
   // o del localStorage
 
-  ruleConfig: parseRulesConfig(mockRuleConfig),
+  ruleConfig: mockRuleConfig,
   columnConfig: undefined,
 
   getRuleConfig: () => get().ruleConfig,

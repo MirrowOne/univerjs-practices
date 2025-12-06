@@ -10,9 +10,13 @@ export const useValidationsRules = () => {
   const fworksheet = useFWorksheet();
   const univerAPI = useUniverAPI();
 
-  const { numberBetween, textLength } = ruleConfig as IRuleConfig;
+  const { numberBetween, textLength, checkBox } = ruleConfig as IRuleConfig;
 
   const numberBetweenRule = useCallback(() => {
+    if (!numberBetween) {
+      console.info("No se encontraron reglas de validación para el rango");
+      return;
+    }
     const { range, min, max, isActive } = numberBetween;
 
     if (!isActive) return;
@@ -35,6 +39,10 @@ export const useValidationsRules = () => {
   }, [fworksheet, univerAPI, numberBetween]);
 
   const textLengthRule = useCallback(() => {
+    if (!textLength) {
+      console.info("No se encontraron reglas de validación para el rango");
+      return;
+    }
     const { range, min, max, isActive } = textLength;
 
     if (!isActive) return;
@@ -64,10 +72,36 @@ export const useValidationsRules = () => {
     fRange.setDataValidation(rule);
   }, [fworksheet, univerAPI, textLength]);
 
+  const checkBoxRule = useCallback(() => {
+    if (!checkBox) {
+      console.info("No se encontraron reglas de validación para el rango");
+      return;
+    }
+
+    const { range, isActive, checkValues } = checkBox;
+
+    if (!isActive) return;
+
+    const fRange = fworksheet.getRange(range);
+    const rule = univerAPI
+      ?.newDataValidation()
+      .requireCheckbox()
+      .setOptions({
+        showErrorMessage: true,
+        error: `El valor debe ser ${checkValues.checked} o ${checkValues.unchecked}`,
+        errorTitle: "Error de validación",
+        errorStyle: univerAPI.Enum.DataValidationErrorStyle.STOP,
+      })
+      .build();
+
+    fRange.setDataValidation(rule);
+  }, [fworksheet, univerAPI, checkBox]);
+
   // Create a new data validation rule that requires a number between 1 and 10 fot the range A1:B10
   const initializeRules = () => {
     numberBetweenRule();
     textLengthRule();
+    checkBoxRule();
   };
 
   return {
