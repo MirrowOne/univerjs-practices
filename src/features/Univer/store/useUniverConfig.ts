@@ -27,6 +27,13 @@ const Range3 = {
   endColumn: 5,
 };
 
+const Range4 = {
+  startRow: 0,
+  startColumn: 6,
+  endRow: 10,
+  endColumn: 7,
+};
+
 const mockRuleConfig: IRuleConfig = {
   // aqui se creara un objeto para determinar cuales seran las columnas y rangos que tendran las validaciones
   // desde aqui se moldeara el comportamiento en general de las reglas
@@ -50,6 +57,11 @@ const mockRuleConfig: IRuleConfig = {
       checked: "SI",
       unchecked: "NO",
     },
+  },
+  dropdown: {
+    isActive: true,
+    range: Range4,
+    listValues: ["valor1", "valor2", "valor3"],
   },
 };
 

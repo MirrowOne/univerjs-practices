@@ -19,4 +19,9 @@ export interface IRuleConfig {
       unchecked: boolean | string | number;
     };
   };
+  dropdown?: {
+    isActive: boolean;
+    range: IRange;
+    listValues: string[];
+  };
 }
