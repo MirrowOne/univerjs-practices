@@ -10,7 +10,8 @@ export const useValidationsRules = () => {
   const fworksheet = useFWorksheet();
   const univerAPI = useUniverAPI();
 
-  const { numberBetween, textLength, checkBox } = ruleConfig as IRuleConfig;
+  const { numberBetween, textLength, checkBox, dropdown } =
+    ruleConfig as IRuleConfig;
 
   const numberBetweenRule = useCallback(() => {
     if (!numberBetween) {
@@ -97,11 +98,37 @@ export const useValidationsRules = () => {
     fRange.setDataValidation(rule);
   }, [fworksheet, univerAPI, checkBox]);
 
+  const dropdownRule = useCallback(() => {
+    if (!dropdown) {
+      console.info("No se encontraron reglas de validación para el rango");
+      return;
+    }
+
+    const { range, isActive, listValues } = dropdown;
+
+    if (!isActive) return;
+
+    const fRange = fworksheet.getRange(range);
+    const rule = univerAPI
+      ?.newDataValidation()
+      .requireValueInList(listValues)
+      .setOptions({
+        showErrorMessage: true,
+        error: `El valor debe ser ${listValues.join(", ")}`,
+        errorTitle: "Error de validación",
+        errorStyle: univerAPI.Enum.DataValidationErrorStyle.STOP,
+      })
+      .build();
+
+    fRange.setDataValidation(rule);
+  }, [fworksheet, univerAPI, dropdown]);
+
   // Create a new data validation rule that requires a number between 1 and 10 fot the range A1:B10
   const initializeRules = () => {
     numberBetweenRule();
     textLengthRule();
     checkBoxRule();
+    dropdownRule();
   };
 
   return {
