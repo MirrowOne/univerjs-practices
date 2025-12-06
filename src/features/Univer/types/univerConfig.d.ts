@@ -1,14 +1,22 @@
 export interface IRuleConfig {
-  numberBetween: {
+  numberBetween?: {
     isActive: boolean;
     range: IRange;
     min: number;
     max: number;
   };
-  textLength: {
+  textLength?: {
     isActive: boolean;
     range: IRange;
     min: number;
     max: number;
+  };
+  checkBox?: {
+    isActive: boolean;
+    range: IRange;
+    checkValues: {
+      checked: boolean | string | number;
+      unchecked: boolean | string | number;
+    };
   };
 }

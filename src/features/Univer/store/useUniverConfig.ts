@@ -15,7 +15,14 @@ const Range2 = {
   startRow: 0,
   startColumn: 2,
   endRow: 10,
-  endColumn: 1,
+  endColumn: 3,
+};
+
+const Range3 = {
+  startRow: 0,
+  startColumn: 4,
+  endRow: 10,
+  endColumn: 5,
 };
 
 const mockRuleConfig: IRuleConfig = {
@@ -23,16 +30,24 @@ const mockRuleConfig: IRuleConfig = {
   // desde aqui se moldeara el comportamiento en general de las reglas
   // este objeto debe contener la configuracion de cada regla por separado asi como las columnas que afectan a una u otra regla en conjunto
   numberBetween: {
-    isActive: true,
+    isActive: false,
     range: Range1,
     min: 1,
     max: 10,
   },
   textLength: {
-    isActive: false,
+    isActive: true,
     range: Range2,
     min: 5,
     max: 10,
+  },
+  checkBox: {
+    isActive: true,
+    range: Range3,
+    checkValues: {
+      checked: "SI",
+      unchecked: "NO",
+    },
   },
 };
 

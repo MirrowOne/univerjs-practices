@@ -14,13 +14,13 @@ export const parseRulesConfig = (ruleConfig: IRuleConfig): IRuleConfig => {
     startColumn: rangeCS1,
     endRow: rangeRE1,
     endColumn: rangeCE1,
-  } = numberBetween.range;
+  } = numberBetween?.range;
   const {
     startRow: rangeRS2,
     startColumn: rangeCS2,
     endRow: rangeRE2,
     endColumn: rangeCE2,
-  } = textLength.range;
+  } = textLength?.range;
 
   // 2. Logica de solapamiento (se colocan las condiciones cuando los rangos se solapan en una direccion)
   // Condicion 1: Solapan en filas (Row Overlap)
