@@ -41,7 +41,7 @@ const mockRuleConfig: IRuleConfig = {
     isActive: true,
     range: Range2,
     min: 5,
-    max: 10,
+    max: 15,
   },
   checkBox: {
     isActive: true,
