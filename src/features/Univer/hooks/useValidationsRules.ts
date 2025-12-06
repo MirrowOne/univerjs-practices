@@ -85,7 +85,7 @@ export const useValidationsRules = () => {
     const fRange = fworksheet.getRange(range);
     const rule = univerAPI
       ?.newDataValidation()
-      .requireCheckbox()
+      .requireCheckbox(`${checkValues.checked}`, `${checkValues.unchecked}`)
       .setOptions({
         showErrorMessage: true,
         error: `El valor debe ser ${checkValues.checked} o ${checkValues.unchecked}`,
